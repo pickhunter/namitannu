@@ -1,5 +1,6 @@
 class GuestsController < ApplicationController
   before_action :set_guest, only: [:show, :edit, :update, :destroy]
+  http_basic_authenticate_with name: "namit", password: "anu"
 
   # GET /guests
   # GET /guests.json
