@@ -136,7 +136,7 @@
 			
 			
 			//START POST ACTION
-            $.post(action_url, post_data, function(response){  
+      $.post(action_url, post_data, function(response){  
 			
                 //DEFINE OUTPUT MESSAGE VARIABLE
 				var output = "";

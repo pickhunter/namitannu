@@ -144,9 +144,9 @@
       </div>
           
           <!-- CONTAINER -->
-      <div class="container">
-                <%= form_tag 'rsvp' do %>
-                <!-- <form method="post" action="rsvp" id="rsvpform"> -->
+      <div class="container" ng-app="rsvp" ng-controller="rsvpController">
+                
+                <form method="post" name="rsvp_form" ng-submit="submit()" novalidate>
                 <!--TEXT SECTION-->
                 <div class="row">
                   <div id="message" class="col-md-offset-2 col-md-8 message">
@@ -165,59 +165,60 @@
                         <!-- TEXTBOX WITH ICON-->
                         <div class="form-group">
                 <label for="input-text-icon">*NAME</label>
-                <div class="input-group">
+                <div class="input-group {{rsvp_form.name.$invalid &&  rsvp_form.$submitted ? 'has-error': ''}}">
                   <div class="input-group-addon"><i class="de-icon-heart-empty"></i></div>
-                    <input name="name" type="text" id="input-text-icon" class="form-control ajax-input"  placeholder="" data-required="Please Fill All Field." data-output-label="Output Text-1">
+                    <input ng-model="rsvp.name" name="name" type="text" id="input-text-icon" class="form-control ajax-input"  placeholder="" data-required="Please Fill All Field." data-output-label="Output Text-1" required>
                 </div>
               </div>
                       
                         
                          <!-- EMAIL WITH ICON -->
-                        <div class="form-group">
+                        <div class="form-group {{rsvp_form.email.$invalid &&  rsvp_form.$submitted ? 'has-error': ''}}">
                 <label for="input-email-icon">*EMAIL</label>
                             <div class="input-group">
                               <div class="input-group-addon"><i class="de-icon-mail"></i></div>
-                  <input  name="email" type="email" id="input-email-icon"  class="form-control ajax-input" placeholder="" data-required="Please Fill All Field." data-output-label="Output Email-1">
+                  <input ng-model="rsvp.email" name="email" type="email" id="input-email-icon"  class="form-control ajax-input" placeholder="" data-required="Please Fill All Field." data-output-label="Output Email-1" required >
                             </div>
             </div>
                         
                      
                        
                         <!-- CHECKBOX --> 
-                        <div class="form-group">
+                        <div class="form-group {{!checkboxesValid() &&  rsvp_form.$submitted ? 'has-error': ''}}">
                           <label>SELECT EVENTS YOU WILL JOIN US FOR</label>
                             <div id="input-checkbox" class="ajax-input ajax-checkbox" data-required="Please Fill All Field." data-output-label="Output checkbox">
                             <div class="checkbox">
                     <label class="option-label">
-                      <input type="checkbox" name="mehendi" value="mehendi">
+                      <input ng-model="rsvp.mehendi" type="checkbox" name="mehendi" value="mehendi">
                       Mehendi and Sangeet,Delhi, Friday, January 15
                     </label>
                 </div>
                 <div class="checkbox">
                     <label class="option-label">
-                      <input type="checkbox" name="wedding" value="wedding" >
+                      <input ng-model="rsvp.wedding" type="checkbox" name="wedding" value="wedding" >
                       Wedding Ceremony,Delhi, Saturday, January 16
                     </label>
                 </div>
                                 <div class="checkbox">
                                 <label class="option-label">
-                                <input type="checkbox" name="reception" value="reception" >
+                                <input ng-model="rsvp.reception" type="checkbox" name="reception" value="reception" >
                                 Recption, Rawatbhata, Tuesday January 19
                                 </label>
                                 </div>
                             </div>
+                            <small class="text-danger" ng-show="!checkboxesValid() &&  rsvp_form.$submitted">Please select atleast one event</small>
                         </div>
                         
                         <!-- RADIO INLINE & CUSTOM BUTTON -->
                         <div class="form-group">
                         <label>WILL YOU BRING A GUEST</label>
-                        <div id="input-radio-inline-custom" class="ajax-input ajax-radio" data-required="Please Fill All Field." data-output-label="Output Radio Inline Custom - 1">
+                        <div id="input-radio-inline-custom" class="ajax-input ajax-radio {{!rsvp.guest &&  rsvp_form.$submitted ? 'has-error': ''}}" data-required="Please Fill All Field." data-output-label="Output Radio Inline Custom - 1">
                         <div data-toggle="buttons">
-                        <label class="btn btn-primary no-icon">
-                        <input type="radio" name="guest" id="inlineRadioCustom1" value="yes"> Yes
+                        <label ng-click="rsvp.guest = 'yes'" class="btn btn-primary no-icon">
+                        <input  type="radio" ng-model="rsvp.guest"  name="guest" id="inlineRadioCustom1" value="yes"> Yes
                         </label>
-                        <label class="btn btn-primary no-icon">
-                        <input type="radio" name="guest" id="inlineRadioCustom2" value="no"> No
+                        <label class="btn btn-primary no-icon" ng-click="rsvp.guest = 'no'">
+                        <input  type="radio" ng-model="rsvp.guest" name="guest" id="inlineRadioCustom2" value="no"> No
                         </label>
                        
                         </div>
@@ -227,13 +228,13 @@
                         <!-- RADIO INLINE & CUSTOM BUTTON -->
                         <div class="form-group">
                         <label>WILL YOU NEED ACCOMMODATION</label>
-                        <div id="input-radio-inline-custom" class="ajax-input ajax-radio" data-required="Please Fill All Field." data-output-label="Output Radio Inline Custom - 1">
+                        <div id="input-radio-inline-custom" class="ajax-input ajax-radio {{!rsvp.accomodation &&  rsvp_form.$submitted ? 'has-error': ''}}" data-required="Please Fill All Field." data-output-label="Output Radio Inline Custom - 1">
                         <div data-toggle="buttons">
-                        <label class="btn btn-primary no-icon">
-                        <input type="radio" name="accomodation" id="inlineRadioCustom1" value="yes"> Yes
+                        <label ng-click="rsvp.accomodation = 'yes'" class="btn btn-primary no-icon">
+                        <input required type="radio" ng-model="rsvp.accomodation"  name="accomodation" id="inlineRadioCustom1" value="yes"> Yes
                         </label>
-                        <label class="btn btn-primary no-icon">
-                        <input type="radio" name="accomodation" id="inlineRadioCustom2" value="no"> No
+                        <label ng-click="rsvp.accomodation = 'no'" class="btn btn-primary no-icon">
+                        <input required type="radio" ng-model="rsvp.accomodation" name="accomodation" id="inlineRadioCustom2"  value="no"> No
                         </label>
                         
                         </div>
@@ -242,7 +243,7 @@
                         
                         
                         <div class="form-group">
-                <input type="submit" id="submitButton"  name="submitButton" class="button medium reverse" value="SUBMIT" style="width:100%;">
+                <input ng-disabled="rsvpSent" type="submit" id="submitButton"  name="submitButton" class="button medium reverse" value="{{rsvpSent ? 'RSVP Sent successfully' : 'Send RSVP'}}" style="width:100%;">
             </div>
                               
                     </div>
@@ -250,7 +251,7 @@
         </div><!--END of TEXT SECTION-->
                 
               
-                <% end %>
+                </form>
             </div><!-- END of CONTAINER -->    
                         
         </section> <!--END of CONTENT SECTION-->        
@@ -337,6 +338,13 @@
         <script type="text/javascript" src="js/script.js"></script>        
         <!-- Custom Additional Script -->
         <script type="text/javascript" src="js/main-slider-fade.js"></script>
+
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js"></script>
+        <script type="text/javascript" src="js/rsvp.js"></script>
+
+        <script>
+        var auth_token = '<%= form_authenticity_token %>';
+        </script>
         
   </body>
 </html>

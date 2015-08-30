@@ -1,6 +1,5 @@
 class RsvpController < ApplicationController
   def rsvp
-
     Guest.create! guest_params
     
     # body = "#{params[:name]}"
@@ -11,6 +10,7 @@ class RsvpController < ApplicationController
       :subject => 'Wedding RSVP'
     })
 
+    render json: {status: 200}, status: :created
 
   end
 
